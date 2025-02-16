@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# CONFIG=configs/360.gin  # For 360 scenes.
-CONFIG=configs/llff.gin  # For forward-facing scenes.
-SCENE=scibldg
-EXPERIMENT=llff/"$SCENE"  # Checkpoints, results, logs will be saved to exp/${EXPERIMENT}.
-DATA_ROOT=/pathto/datasets/bilarf_data/editscenes/
-DATA_DIR="$DATA_ROOT"/"$SCENE"
+CONFIG="$1" # For 360 scenes.
+# CONFIG=configs/llff.gin  # For forward-facing scenes.
+DATA_DIR="$2"
+EXPERIMENT="$3"  # Checkpoints, results, logs will be saved to exp/${EXPERIMENT}.
+
+CONVERT_FROM="$4"
+CONVERT_TO="$5"
 
 
 # Training
@@ -13,13 +14,17 @@ DATA_DIR="$DATA_ROOT"/"$SCENE"
 python train.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.data_dir = '${DATA_DIR}'" \
     --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
-    --gin_bindings="Model.bilateral_grid = True"
+    --gin_bindings="Model.bilateral_grid = True" \
+    --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
 
 
 # Render testing views
 python render.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.data_dir = '${DATA_DIR}'" \
-    --gin_bindings="Config.exp_name = '${EXPERIMENT}'"
+    --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
+    --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
 
 
 # Render path
@@ -28,7 +33,9 @@ python render.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
     --gin_bindings="Config.render_path = True" \
     --gin_bindings="Config.render_path_frames = 120" \
-    --gin_bindings="Config.render_video_fps = 60"
+    --gin_bindings="Config.render_video_fps = 60" \
+    --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
 
 
 # # Render training views

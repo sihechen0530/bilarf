@@ -1,0 +1,4 @@
+configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_sRGB sRGB sRGB
+configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_linear sRGB linear
+configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_GPLog sRGB GP-log
+configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_TrueLog sRGB True-log

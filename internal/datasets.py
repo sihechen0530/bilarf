@@ -21,6 +21,8 @@ sys.path.insert(0, 'internal/pycolmap')
 sys.path.insert(0, 'internal/pycolmap/pycolmap')
 import pycolmap
 
+from internal import conversion
+
 
 def load_dataset(split, train_dir, config: configs.Config):
     """Loads a split of a dataset using the data_loader specified by `config`."""
@@ -559,6 +561,10 @@ class LLFF(Dataset):
             # pose_data = load_blender_posedata(self.data_dir)
             raise ValueError('COLMAP data not found.')
         image_names, poses, pixtocam, distortion_params, camtype = pose_data
+        
+        
+        image_names = [name.replace('.jpg', '.png') if name.endswith('.jpg') else name for name in image_names]
+        # print("Line 565: datasets.py: image_names",image_names)
 
         # Previous NeRF results were generated with images sorted by filename,
         # use this flag to ensure metrics are reported on the same test set.
@@ -688,6 +694,19 @@ class LLFF(Dataset):
                            for f in image_names]
             images = [utils.load_img(x) for x in tqdm(image_paths, desc='Loading LLFF dataset', disable=self.global_rank != 0, leave=False)]
             images = np.stack(images, axis=0) / 255.
+
+            # # transform the image chromaticity type
+            # images = conversion.convert(images, config)
+
+            S2 = 255
+            S1 = S2 / (np.exp(1) - 1)
+            inner_term = (np.exp(images) - 1) * S1
+            clamped_term = np.maximum(inner_term, 1)  # Clamps lower bound to 1
+            true_log = np.log(clamped_term)
+            true_log_min = np.min(true_log)
+            true_log_max = np.max(true_log)
+            normalized_true_log = (true_log - true_log_min) / (true_log_max - true_log_min)
+            images = normalized_true_log
 
             # EXIF data is usually only present in the original JPEG images.
             jpeg_paths = [os.path.join(colmap_image_dir, f) for f in image_names]

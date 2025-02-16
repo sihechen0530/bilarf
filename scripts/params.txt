@@ -1,0 +1,2 @@
+configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/LogNeRFStudioProcessed/GX010625_LLFF_Processed llff_truelog/GX010625_GPLog_sRGB GP-log sRGB
+configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/LogNeRFStudioProcessed/GX010625_LLFF_Processed llff_truelog/GX010625_GPLog_linear GP-log linear

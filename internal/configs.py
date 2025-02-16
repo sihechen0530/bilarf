@@ -6,7 +6,7 @@ import torch
 import torch.nn.functional as F
 from absl import flags
 import gin
-from internal import utils
+from internal import utils, chromaticity
 
 gin.add_config_file_search_path('configs/')
 
@@ -63,7 +63,7 @@ class Config:
     # Only used by train.py:
     max_steps: int = 25000  # The number of optimization steps.
     early_exit_steps: Optional[int] = None  # Early stopping, for debugging.
-    checkpoint_every: int = 5000  # The number of steps to save a checkpoint.
+    checkpoint_every: int = 500  # The number of steps to save a checkpoint.
     resume_from_checkpoint: bool = True  # whether to resume from checkpoint.
     checkpoints_total_limit: int = 1
     gradient_scaling: bool = False  # If True, scale gradients as in https://gradient-scaling.github.io/.
@@ -180,6 +180,10 @@ class Config:
     tsdf_resolution: int = 512
     truncation_margin: float = 5.0
     tsdf_max_radius: float = 10.0  # in world space
+
+    # data conversion
+    convert_from: str = chromaticity.ChromaticityType.GPLog
+    convert_to: str = chromaticity.ChromaticityType.TrueLog
 
 
 def define_common_flags():

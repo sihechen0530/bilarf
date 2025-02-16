@@ -33,7 +33,7 @@ TIME_PRECISION = 1000  # Internally represent integer times in milliseconds.
 
 def main(unused_argv):
     config = configs.load_config()
-    config.exp_path = os.path.join("exp", config.exp_name)
+    config.exp_path = os.path.join("/work/SuperResolutionData/sihe.chen/lognerf", config.exp_name)
     config.checkpoint_dir = os.path.join(config.exp_path, 'checkpoints')
     config.test_vis_dir = os.path.join(config.exp_path, 'test_vis')
     utils.makedirs(config.exp_path)
