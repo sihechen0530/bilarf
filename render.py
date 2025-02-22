@@ -83,7 +83,7 @@ def create_videos(config, base_dir, out_dir, out_name, num_frames):
 
 def main(unused_argv):
     config = configs.load_config()
-    config.exp_path = os.path.join('exp', config.exp_name)
+    config.exp_path = os.path.join("/work/SuperResolutionData/sihe.chen/lognerf", config.exp_name)
     config.checkpoint_dir = os.path.join(config.exp_path, 'checkpoints' if not config.render_ft else f'ft/{config.ft_name}/checkpoints/')
     config.render_dir = os.path.join(config.exp_path, 'render' if not config.render_ft else f'ft/{config.ft_name}/render')
 

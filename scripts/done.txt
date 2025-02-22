@@ -1,2 +1,0 @@
-
-configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/LogNeRFStudioProcessed/GX010625_LLFF_Processed llff_truelog/GX010625_GPLog_GPLog GP-log GP-log

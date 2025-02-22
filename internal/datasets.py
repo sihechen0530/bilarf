@@ -696,7 +696,7 @@ class LLFF(Dataset):
             images = np.stack(images, axis=0) / 255.
 
             # # transform the image chromaticity type
-            # images = conversion.convert(images, config)
+            images = conversion.convert(images, config)
 
             S2 = 255
             S1 = S2 / (np.exp(1) - 1)

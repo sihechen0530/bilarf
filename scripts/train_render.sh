@@ -5,6 +5,9 @@ CONFIG="$1" # For 360 scenes.
 DATA_DIR="$2"
 EXPERIMENT="$3"  # Checkpoints, results, logs will be saved to exp/${EXPERIMENT}.
 
+# for render log to successfully generate
+mkdir -p exp/$EXPERIMENT
+
 CONVERT_FROM="$4"
 CONVERT_TO="$5"
 
