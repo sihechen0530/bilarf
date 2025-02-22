@@ -698,15 +698,15 @@ class LLFF(Dataset):
             # # transform the image chromaticity type
             images = conversion.convert(images, config)
 
-            S2 = 255
-            S1 = S2 / (np.exp(1) - 1)
-            inner_term = (np.exp(images) - 1) * S1
-            clamped_term = np.maximum(inner_term, 1)  # Clamps lower bound to 1
-            true_log = np.log(clamped_term)
-            true_log_min = np.min(true_log)
-            true_log_max = np.max(true_log)
-            normalized_true_log = (true_log - true_log_min) / (true_log_max - true_log_min)
-            images = normalized_true_log
+            # S2 = 255
+            # S1 = S2 / (np.exp(1) - 1)
+            # inner_term = (np.exp(images) - 1) * S1
+            # clamped_term = np.maximum(inner_term, 1)  # Clamps lower bound to 1
+            # true_log = np.log(clamped_term)
+            # true_log_min = np.min(true_log)
+            # true_log_max = np.max(true_log)
+            # normalized_true_log = (true_log - true_log_min) / (true_log_max - true_log_min)
+            # images = normalized_true_log
 
             # EXIF data is usually only present in the original JPEG images.
             jpeg_paths = [os.path.join(colmap_image_dir, f) for f in image_names]
