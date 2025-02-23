@@ -10,6 +10,7 @@ mkdir -p exp/$EXPERIMENT
 
 CONVERT_FROM="$4"
 CONVERT_TO="$5"
+NORMALIZE="$6"
 
 
 # Training
@@ -19,7 +20,8 @@ python train.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
     --gin_bindings="Model.bilateral_grid = True" \
     --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
-    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'" \
+    --gin_bindings="Config.normalize = ${NORMALIZE}"
 
 
 # Render testing views
@@ -27,7 +29,8 @@ python render.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.data_dir = '${DATA_DIR}'" \
     --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
     --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
-    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'" \
+    --gin_bindings="Config.normalize = ${NORMALIZE}"
 
 
 # Render path
@@ -38,7 +41,8 @@ python render.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.render_path_frames = 120" \
     --gin_bindings="Config.render_video_fps = 60" \
     --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
-    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'" \
+    --gin_bindings="Config.normalize = ${NORMALIZE}"
 
 
 # # Render training views

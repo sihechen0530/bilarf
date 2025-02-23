@@ -5,6 +5,10 @@ from internal import configs
 DEFAULT_MAX_VAL = 255
 
 def convert(images, config: configs.Config):
+    # input data range: (0, 1)
+    # output data range: (0, 1)
+    # rescale to 0-255
+    images = images * DEFAULT_MAX_VAL
     linear = None
     if config.convert_from == chromaticity.ChromaticityType.sRGB:
         linear = srgb_2_linear(images)
@@ -15,14 +19,19 @@ def convert(images, config: configs.Config):
     if linear is None:
         print("unsupported input type: ", config.convert_from)
         exit(-1)
+    divisor = 1
+    if config.normalize:
+        divisor = DEFAULT_MAX_VAL
     if config.convert_to == chromaticity.ChromaticityType.sRGB:
-        return linear_2_srgb(linear)
+        return linear_2_srgb(linear) / divisor
     elif config.convert_to == chromaticity.ChromaticityType.GPLog:
-        return linear_2_gplog(linear)
+        return linear_2_gplog(linear) / divisor
     elif config.convert_to == chromaticity.ChromaticityType.linear:
-        return linear
+        return linear / divisor
     elif config.convert_to == chromaticity.ChromaticityType.TrueLog:
-        return linear_2_truelog(linear)
+        return linear_2_truelog(linear) / divisor
+    elif config.convert_to == chromaticity.ChromaticityType.LuvTrueLog:
+        return linear_2_luvtruelog(linear) / divisor
     else:
         pass
     print("unsupported output type: ", config.convert_to)
@@ -52,6 +61,28 @@ def linear_2_gplog(linear_img, max_val=DEFAULT_MAX_VAL):
 def linear_2_truelog(linear_img, max_val=DEFAULT_MAX_VAL):
     '''Convert linear RGB to True Log'''
     return np.log(linear_img + 1) * (max_val / np.log(max_val + 1))
+
+def linear_2_luvtruelog(linear_image, max_val=DEFAULT_MAX_VAL):
+    S1 = max_val / (np.exp(1) - 1)
+
+    # Scale to 0-255 and clamp minimum to 1
+    clamped_values = np.maximum(linear_image, 1.0)
+
+    # First log transform
+    first_log = np.log(clamped_values)
+
+    # Exp(log(x)-1) transformation
+    Y = np.exp(first_log - 1) * S1
+
+    # Final log transform
+    final_log = np.log(Y)
+
+    # Normalize
+    log_min = np.min(final_log)
+    log_max = np.max(final_log)
+    normalized_log = (final_log - log_min) / (log_max - log_min)
+
+    return normalized_log * max_val
 
 
 

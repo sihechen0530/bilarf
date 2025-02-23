@@ -184,6 +184,7 @@ class Config:
     # data conversion
     convert_from: str = chromaticity.ChromaticityType.GPLog
     convert_to: str = chromaticity.ChromaticityType.TrueLog
+    normalize: bool = False
 
 
 def define_common_flags():

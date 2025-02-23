@@ -1,0 +1,41 @@
+
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/LogNeRFStudioProcessed/GX010625_LLFF_Processed llff_truelog/GX010625_GPLog_GPLog GP-log GP-log
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/LogNeRFStudioProcessed/GX010625_LLFF_Processed llff_truelog/GX010625_GPLog_sRGB GP-log sRGB
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010455 GPLog/GX010455_GPLog_GPLog GP-log GP-log
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/LogNeRFStudioProcessed/GX010625_LLFF_Processed llff_truelog/GX010625_GPLog_linear GP-log linear
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_GPLog sRGB GP-log
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_linear sRGB linear
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_sRGB sRGB sRGB
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/LuvNeRF/videos/sRGBNeRFStudioProcessed/GX010624_LLFF_Processed llff_sRGB/GX010624_sRGB_TrueLog sRGB True-log
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010456 GPLog/GX010456_linear GP-log linear
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010456 GPLog/GX010456_sRGB GP-log sRGB
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010456 GPLog/GX010456_GPLog GP-log GP-log
+bash scripts/train_render.sh configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010456 GPLog/GX010456_TrueLog GP-log True-log
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_linear GP-log linear
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_sRGB GP-log sRGB
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_GPLog GP-log GP-log
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_TrueLog GP-log True-log
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_linear sRGB linear
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_sRGB sRGB sRGB
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_GPLog sRGB GP-log
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_TrueLog sRGB True-log
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_sRGB_normalize GPLog sRGB True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_LuvTrueLog_normalize GPLog LuvTrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_linear_normalize GPLog linear True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_GPLog_normalize GPLog GPLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working GPLog/GX010405_all_working_TrueLog_normalize GPLog TrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_sRGB sRGB sRGB True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_LuvTrueLog sRGB LuvTrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_linear sRGB linear True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_GPLog sRGB GPLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/sRGB/GX010404 sRGB/GX010404_TrueLog sRGB TrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_sRGB GPLog sRGB True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_LuvTrueLog GPLog LuvTrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_linear GPLog linear True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_GPLog GPLog GPLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_TrueLog GPLog TrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010417 sRGB/GX010417_sRGB sRGB sRGB True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010417 sRGB/GX010417_LuvTrueLog sRGB LuvTrueLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010417 sRGB/GX010417_linear sRGB linear True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010417 sRGB/GX010417_GPLog sRGB GPLog True
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010417 sRGB/GX010417_TrueLog sRGB TrueLog True

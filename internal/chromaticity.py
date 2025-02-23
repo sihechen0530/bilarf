@@ -1,5 +1,6 @@
 class ChromaticityType:
     sRGB = "sRGB" # from / to
-    GPLog = "GP-log" # from / to
+    GPLog = "GPLog" # from / to
     linear = "linear" # to
-    TrueLog = "True-log" # to
+    TrueLog = "TrueLog" # to
+    LuvTrueLog = "LuvTrueLog"
