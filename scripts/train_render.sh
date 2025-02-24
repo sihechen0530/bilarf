@@ -11,6 +11,7 @@ mkdir -p exp/$EXPERIMENT
 CONVERT_FROM="$4"
 CONVERT_TO="$5"
 NORMALIZE="$6"
+MAX_STEPS=$7
 
 
 # Training
@@ -21,7 +22,8 @@ python train.py --gin_configs=${CONFIG} \
     --gin_bindings="Model.bilateral_grid = True" \
     --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
     --gin_bindings="Config.convert_to = '${CONVERT_TO}'" \
-    --gin_bindings="Config.normalize = ${NORMALIZE}"
+    --gin_bindings="Config.normalize = ${NORMALIZE}" \
+    --gin_bindings="Config.max_steps = ${MAX_STEPS}"
 
 
 # Render testing views
