@@ -47,3 +47,15 @@ configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_resu
 configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_linear_5000 GPLog linear True 5000
 configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_GPLog_5000 GPLog GPLog True 5000
 configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 GPLog/GX010416_TrueLog_5000 GPLog TrueLog True 5000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010571 GPLog/GX010571_sRGB_25000 GPLog sRGB True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010571 GPLog/GX010571_linear_25000 GPLog linear True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010571 GPLog/GX010571_GPLog_25000 GPLog GPLog True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010571 GPLog/GX010571_TrueLog_25000 GPLog TrueLog True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010573 sRGB/GX010573_sRGB_25000 sRGB sRGB True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010573 sRGB/GX010573_linear_25000 sRGB linear True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010573 sRGB/GX010573_GPLog_25000 sRGB GPLog True 25000
+configs/llff.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/sRGB/GX010573 sRGB/GX010573_TrueLog_25000 sRGB TrueLog True 25000
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 20250225/GPLog/GX010416_sRGB GPLog sRGB True 10000
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 20250225/GPLog/GX010416_linear GPLog linear True 10000
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 20250225/GPLog/GX010416_GPLog GPLog GPLog True 10000
+configs/360.gin /work/SuperResolutionData/sihe.chen/history/ns_process_data_result/Log/GX010416 20250225/GPLog/GX010416_TrueLog GPLog TrueLog True 10000
