@@ -166,7 +166,7 @@ def anti_interlevel_loss(ray_history, config):
     last_ray_results = ray_history[-1]
     c = last_ray_results['sdist'].detach()
     w = last_ray_results['weights'].detach()
-    w_normalize = w / (c[..., 1:] - c[..., :-1])
+    w_normalize = w / (c[..., 1:] - c[..., :-1] + 1e-5)
     loss_anti_interlevel = 0.
     for i, ray_results in enumerate(ray_history[:-1]):
         cp = ray_results['sdist']

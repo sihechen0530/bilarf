@@ -105,6 +105,15 @@ def cast_rays(tdist, origins, directions, cam_dirs, radii, rand=True, n=7, m=3, 
     Returns:
         a tuple of arrays of means and covariances.
     """
+
+    # t0 = tdist[..., :-1]
+    # t1 = tdist[..., 1:]
+    # # gaussian_fn = conical_frustum_to_gaussian
+    # gaussian_fn = cylinder_to_gaussian
+    # means, covs = gaussian_fn(directions, t0, t1, radii, True)
+    # means = means + origins[..., None, :]
+    # return means, covs, None
+
     t0 = tdist[..., :-1, None]
     t1 = tdist[..., 1:, None]
     radii = radii[..., None]
@@ -113,7 +122,7 @@ def cast_rays(tdist, origins, directions, cam_dirs, radii, rand=True, n=7, m=3, 
     t_d = (t1 - t0) / 2
 
     j = torch.arange(6, device=tdist.device)
-    t = t0 + t_d / (t_d ** 2 + 3 * t_m ** 2) * (t1 ** 2 + 2 * t_m ** 2 + 3 / 7 ** 0.5 * (2 * j / 5 - 1) * (
+    t = t0 + t_d / (t_d ** 2 + 3 * t_m ** 2 + 1e-5) * (t1 ** 2 + 2 * t_m ** 2 + 3 / 7 ** 0.5 * (2 * j / 5 - 1) * (
         (t_d ** 2 - t_m ** 2) ** 2 + 4 * t_m ** 4).sqrt())
 
     deg = torch.pi / 3 * torch.tensor([0, 2, 4, 3, 5, 1], device=tdist.device, dtype=torch.float)
