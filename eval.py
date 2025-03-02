@@ -299,6 +299,7 @@ def main(unused_argv):
             break
         last_step = step
     logger.info('Finish evaluation.')
+    os.system(f"rm -rf {config.render_dir}/*/*.tiff")
 
 
 if __name__ == '__main__':

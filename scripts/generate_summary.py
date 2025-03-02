@@ -4,11 +4,13 @@ import matplotlib.pyplot as plt
 import os
 import glob
 
+FOLDER = "path" # path or test
+
 def show_image_under_dir(image_dir):
     MAX_NUM = 16  # Maximum number of images to plot
     
     # Get all image files in the directory
-    image_files = [f for f in os.listdir(image_dir) if f.lower().endswith(('png', 'jpg', 'jpeg'))]
+    image_files = [f for f in os.listdir(image_dir) if f.lower().endswith('.png')]
     image_files = sorted(image_files)[::len(image_files) // MAX_NUM]  # Select only MAX_NUM images
     
     # Load images
@@ -38,5 +40,8 @@ def show_image_under_dir(image_dir):
     plt.savefig(image_dir + "/summary.png", dpi=300, bbox_inches="tight")
     plt.close()
 
-for image_dir in glob.glob("/work/SuperResolutionData/sihe.chen/lognerf/20250225/GPLog/GX010571_linear_5000/render/path_renders_step_5000"):
-    show_image_under_dir(image_dir)
+for image_dir in glob.glob(f"/work/SuperResolutionData/sihe.chen/lognerf/*/GPLog/*/*/render/{FOLDER}*"):
+    try:
+        show_image_under_dir(image_dir)
+    except:
+        continue
