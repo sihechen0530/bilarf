@@ -18,7 +18,7 @@ NerfMLP.disable_density_normals = True
 
 ### For running the code on 24G RAM GPU:
 
-Config.batch_size = 16384
-Config.render_chunk_size = 16384
+Config.batch_size = 8192
+Config.render_chunk_size = 8192
 
 # Config.max_steps = 100000  # optional
