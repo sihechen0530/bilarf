@@ -643,6 +643,7 @@ class MLP(nn.Module):
                     specular_linear = 0.5 * rgb
 
                 # Combine specular and diffuse components and tone map to sRGB.
+                # TODO: strange
                 rgb = torch.clip(image.linear_to_srgb(specular_linear + diffuse_linear), 0.0, 1.0)
 
             # Apply padding, mapping color to [-rgb_padding, 1+rgb_padding].

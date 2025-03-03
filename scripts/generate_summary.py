@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import glob
 
-FOLDER = "path" # path or test
+FOLDER = "test" # path or test
 
 def show_image_under_dir(image_dir):
     MAX_NUM = 16  # Maximum number of images to plot
@@ -40,7 +40,7 @@ def show_image_under_dir(image_dir):
     plt.savefig(image_dir + "/summary.png", dpi=300, bbox_inches="tight")
     plt.close()
 
-for image_dir in glob.glob(f"/work/SuperResolutionData/sihe.chen/lognerf/*/GPLog/*/*/render/{FOLDER}*"):
+for image_dir in glob.glob(f"/work/SuperResolutionData/sihe.chen/lognerf/20250302/iteration/GPLog/*/render/{FOLDER}*"):
     try:
         show_image_under_dir(image_dir)
     except:

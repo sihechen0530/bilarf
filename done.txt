@@ -335,4 +335,7 @@ configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_resu
 configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/iteration/GPLog/GX010416_linear_1000 GPLog linear True 1000
 configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/iteration/GPLog/GX010416_GPLog_1000 GPLog GPLog True 1000
 configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/iteration/GPLog/GX010416_TrueLog_1000 GPLog TrueLog True 1000
-
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/loss/GPLog/GX010416_sRGB_5000 GPLog sRGB True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/loss/GPLog/GX010416_linear_5000 GPLog linear True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/loss/GPLog/GX010416_GPLog_5000 GPLog GPLog True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250302/loss/GPLog/GX010416_TrueLog_5000 GPLog TrueLog True 5000
