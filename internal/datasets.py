@@ -696,7 +696,7 @@ class LLFF(Dataset):
             images = np.stack(images, axis=0) / 255.
 
             # # transform the image chromaticity type
-            images = conversion.convert(images, config)
+            # images = conversion.convert(images, config)
 
             # EXIF data is usually only present in the original JPEG images.
             jpeg_paths = [os.path.join(colmap_image_dir, f) for f in image_names]

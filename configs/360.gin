@@ -2,7 +2,7 @@ Config.exp_name = 'test'
 Config.dataset_loader = 'llff'
 Config.near = 0.2
 Config.far = 1e6
-Config.factor = 8
+Config.factor = 4
 Config.forward_facing = False
 Config.train_render_every = 5000
 
