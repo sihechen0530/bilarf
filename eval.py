@@ -15,6 +15,7 @@ from internal import train_utils
 from internal import checkpoints
 from internal import utils
 from internal import vis
+from internal import conversion
 import numpy as np
 import torch
 import tensorboardX
@@ -91,7 +92,7 @@ def main(unused_argv):
     if config.rawnerf_mode:
         postprocess_fn = dataset.metadata['postprocess_fn']
     else:
-        postprocess_fn = lambda z: z
+        postprocess_fn = lambda z: conversion.uniform_to_sRGB(z, config.convert_to)
 
     if config.eval_raw_affine_cc:
         cc_fun = raw_utils.match_images_affine
