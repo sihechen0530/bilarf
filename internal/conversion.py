@@ -1,88 +1,100 @@
 import numpy as np
 from internal import chromaticity
 from internal import configs
+import torch
 
 DEFAULT_MAX_VAL = 255
 
-def convert(images, config: configs.Config):
+def convert(images, config: configs.Config, is_torch=False):
+    return _convert(images, config.convert_from, config.convert_to, is_torch, config.normalize)
+
+def _convert(images, convert_from, convert_to, is_torch, normalize=True):
     # input data range: (0, 1)
     # output data range: (0, 1)
     # rescale to 0-255
+    exp_func = np.exp
+    log_func = np.log
+    if is_torch:
+        exp_func = torch.exp
+        log_func = torch.log
     images = images * DEFAULT_MAX_VAL
     linear = None
-    if config.convert_from == chromaticity.ChromaticityType.sRGB:
-        linear = srgb_2_linear(images)
-    elif config.convert_from == chromaticity.ChromaticityType.GPLog:
-        linear = gplog_2_linear(images)
-    else:
-        pass
-    if linear is None:
-        print("unsupported input type: ", config.convert_from)
-        exit(-1)
+    if convert_from == chromaticity.ChromaticityType.sRGB:
+        linear = srgb_2_linear(images, exp_func, log_func)
+    elif convert_from == chromaticity.ChromaticityType.GPLog:
+        linear = gplog_2_linear(images, exp_func, log_func)
+    elif convert_from == chromaticity.ChromaticityType.linear:
+        linear = images
+    elif convert_from == chromaticity.ChromaticityType.TrueLog:
+        linear = truelog_2_linear(images, exp_func, log_func)
     divisor = 1
-    if config.normalize:
+    if normalize:
         divisor = DEFAULT_MAX_VAL
-    if config.convert_to == chromaticity.ChromaticityType.sRGB:
-        return linear_2_srgb(linear) / divisor
-    elif config.convert_to == chromaticity.ChromaticityType.GPLog:
-        return linear_2_gplog(linear) / divisor
-    elif config.convert_to == chromaticity.ChromaticityType.linear:
+    if convert_to == chromaticity.ChromaticityType.sRGB:
+        return linear_2_srgb(linear, exp_func, log_func) / divisor
+    elif convert_to == chromaticity.ChromaticityType.GPLog:
+        return linear_2_gplog(linear, exp_func, log_func) / divisor
+    elif convert_to == chromaticity.ChromaticityType.linear:
         return linear / divisor
-    elif config.convert_to == chromaticity.ChromaticityType.TrueLog:
-        return linear_2_truelog(linear) / divisor
-    elif config.convert_to == chromaticity.ChromaticityType.LuvTrueLog:
-        return linear_2_luvtruelog(linear) / divisor
-    else:
-        pass
-    print("unsupported output type: ", config.convert_to)
-    exit(-1)
+    elif convert_to == chromaticity.ChromaticityType.TrueLog:
+        return linear_2_truelog(linear, exp_func, log_func) / divisor
+    # elif convert_to == chromaticity.ChromaticityType.LuvTrueLog:
+    #     return linear_2_luvtruelog(linear) / divisor
+    return None
 
 
-def srgb_2_linear(srgb_img, max_val=DEFAULT_MAX_VAL):
+def uniform_to_sRGB(images, config, is_torch=True):
+    return _convert(images, config.convert_to, chromaticity.ChromaticityType.sRGB, is_torch)
+
+
+def srgb_2_linear(srgb_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert sRGB to linear RGB.'''
     '''inverse of: (x/255)^(1/2.22)*255'''
     return (srgb_img / max_val) ** 2.22 * max_val
 
-def gplog_2_linear(gplog_img, max_val=DEFAULT_MAX_VAL):
+def gplog_2_linear(gplog_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert GP-Log to linear RGB.'''
     '''inverse of: ln(x/255*(e-1)+1)*255'''
-    return ((np.exp(gplog_img / max_val) - 1) / (np.exp(1) - 1)) * max_val
+    return ((exp_func(gplog_img / max_val) - 1) / (np.exp(1) - 1)) * max_val
 
-def linear_2_srgb(linear_img, max_val=DEFAULT_MAX_VAL):
+def truelog_2_linear(truelog_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
+    return exp_func(truelog_img * (np.log(max_val + 1) / max_val)) - 1
+
+def linear_2_srgb(linear_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert linear RGB to sRGB.'''
     '''(x/255)^(1/2.22)*255'''
     return (linear_img / max_val) ** (1 / 2.22) * max_val
 
-def linear_2_gplog(linear_img, max_val=DEFAULT_MAX_VAL):
+def linear_2_gplog(linear_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert linear RGB to GP-Log.'''
     '''ln(x/255*(e-1)+1)*255'''
-    return np.log((linear_img / max_val) * (np.exp(1) - 1) + 1) * max_val
+    return log_func((linear_img / max_val) * (np.exp(1) - 1) + 1) * max_val
 
-def linear_2_truelog(linear_img, max_val=DEFAULT_MAX_VAL):
+def linear_2_truelog(linear_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert linear RGB to True Log'''
-    return np.log(linear_img + 1) * (max_val / np.log(max_val + 1))
+    return log_func(linear_img + 1) * (max_val / np.log(max_val + 1))
 
-def linear_2_luvtruelog(linear_image, max_val=DEFAULT_MAX_VAL):
-    S1 = max_val / (np.exp(1) - 1)
+# def linear_2_luvtruelog(linear_image, max_val=DEFAULT_MAX_VAL):
+#     S1 = max_val / (exp_func(1) - 1)
 
-    # Scale to 0-255 and clamp minimum to 1
-    clamped_values = np.maximum(linear_image, 1.0)
+#     # Scale to 0-255 and clamp minimum to 1
+#     clamped_values = np.maximum(linear_image, 1.0)
 
-    # First log transform
-    first_log = np.log(clamped_values)
+#     # First log transform
+#     first_log = np.log(clamped_values)
 
-    # Exp(log(x)-1) transformation
-    Y = np.exp(first_log - 1) * S1
+#     # Exp(log(x)-1) transformation
+#     Y = np.exp(first_log - 1) * S1
 
-    # Final log transform
-    final_log = np.log(Y)
+#     # Final log transform
+#     final_log = np.log(Y)
 
-    # Normalize
-    log_min = np.min(final_log)
-    log_max = np.max(final_log)
-    normalized_log = (final_log - log_min) / (log_max - log_min)
+#     # Normalize
+#     log_min = np.min(final_log)
+#     log_max = np.max(final_log)
+#     normalized_log = (final_log - log_min) / (log_max - log_min)
 
-    return normalized_log * max_val
+#     return normalized_log * max_val
 
 
 

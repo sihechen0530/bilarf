@@ -11,6 +11,7 @@ from internal import models
 from internal import ref_utils
 from internal import stepfun
 from internal import utils
+from internal import conversion
 import numpy as np
 import torch
 from torch.utils._pytree import tree_map, tree_flatten
@@ -98,8 +99,12 @@ def compute_data_loss(batch, renderings, config):
     if config.disable_multiscale_loss:
         lossmult = torch.ones_like(lossmult)
 
+    # convert back to sRGB and compute loss
+    batch_rgb = conversion.uniform_to_sRGB(batch['rgb'], config)
+
     for rendering in renderings:
-        resid_sq = (rendering['rgb'] - batch['rgb'][..., :3]) ** 2
+        rendering_rgb = conversion.uniform_to_sRGB(rendering['rgb'], config)
+        resid_sq = (rendering_rgb - batch_rgb[..., :3]) ** 2
         denom = lossmult.sum()
         stats['mses'].append(((lossmult * resid_sq).sum() / denom).item())
 
@@ -111,8 +116,8 @@ def compute_data_loss(batch, renderings, config):
             data_loss = torch.sqrt(resid_sq + config.charb_padding ** 2)
         elif config.data_loss_type == 'rawnerf':
             # Clip raw values against 1 to match sensor overexposure behavior.
-            rgb_render_clip = rendering['rgb'].clamp_max(1)
-            resid_sq_clip = (rgb_render_clip - batch['rgb'][..., :3]) ** 2
+            rgb_render_clip = rendering_rgb.clamp_max(1)
+            resid_sq_clip = (rgb_render_clip - batch_rgb[..., :3]) ** 2
             # Scale by gradient of log tonemapping curve.
             scaling_grad = 1. / (1e-3 + rgb_render_clip.detach())
             # Reweighted L2 loss.
