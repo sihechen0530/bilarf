@@ -99,11 +99,11 @@ def compute_data_loss(batch, renderings, config):
     if config.disable_multiscale_loss:
         lossmult = torch.ones_like(lossmult)
 
-    # convert back to sRGB and compute loss
-    batch_rgb = conversion.uniform_to_sRGB(batch['rgb'], config)
+    # convert back to linear and compute loss
+    batch_rgb = conversion.uniform_to_linear(batch['rgb'], config)
 
     for rendering in renderings:
-        rendering_rgb = conversion.uniform_to_sRGB(rendering['rgb'], config)
+        rendering_rgb = conversion.uniform_to_linear(rendering['rgb'], config)
         resid_sq = (rendering_rgb - batch_rgb[..., :3]) ** 2
         denom = lossmult.sum()
         stats['mses'].append(((lossmult * resid_sq).sum() / denom).item())

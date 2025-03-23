@@ -46,6 +46,9 @@ def _convert(images, convert_from, convert_to, is_torch, normalize=True):
 def uniform_to_sRGB(images, config, is_torch=True):
     return _convert(images, config.convert_to, chromaticity.ChromaticityType.sRGB, is_torch)
 
+def uniform_to_linear(images, config, is_torch=True):
+    return _convert(images, config.convert_to, chromaticity.ChromaticityType.linear, is_torch)
+
 
 def srgb_2_linear(srgb_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert sRGB to linear RGB.'''
