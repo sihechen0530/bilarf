@@ -10,6 +10,7 @@ from internal import render
 from internal import stepfun
 from internal import utils
 from internal import bilateral_grids
+from internal import conversion
 import numpy as np
 import torch
 import torch.nn as nn
@@ -269,6 +270,9 @@ class Model(nn.Module):
                                                           ray_results['coord'],
                                                           ray_results['rgb'])
                 ray_results['rgb'] = bilgrid4d_results['rgb']
+
+            # convert ray_results['rgb'] to linear before rendering
+            ray_results['rgb'] = conversion.uniform_to_linear(ray_results['rgb'], self.config)
 
             # Render each ray.
             rendering = render.volumetric_rendering(

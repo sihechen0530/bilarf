@@ -1,8 +1,8 @@
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_loss/GX010405_all_working/linear GPLog linear True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_loss/GX010405_all_working/sRGB GPLog sRGB True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_loss/GX010405_all_working/GPLog GPLog GPLog True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_loss/GX010405_all_working/TrueLog GPLog TrueLog True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_loss/GX010416/linear GPLog linear True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_loss/GX010416/sRGB GPLog sRGB True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_loss/GX010416/GPLog GPLog GPLog True 5000
-configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_loss/GX010416/TrueLog GPLog TrueLog True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_render_sRGB_loss/GX010405_all_working/linear GPLog linear True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_render_sRGB_loss/GX010405_all_working/sRGB GPLog sRGB True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_render_sRGB_loss/GX010405_all_working/GPLog GPLog GPLog True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010405_all_working 20250320/linear_render_sRGB_loss/GX010405_all_working/TrueLog GPLog TrueLog True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_render_sRGB_loss/GX010416/linear GPLog linear True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_render_sRGB_loss/GX010416/sRGB GPLog sRGB True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_render_sRGB_loss/GX010416/GPLog GPLog GPLog True 5000
+configs/360.gin /work/SuperResolutionData/sihe.chen/lognerf/ns_process_data_result/Log/GX010416 20250320/linear_render_sRGB_loss/GX010416/TrueLog GPLog TrueLog True 5000
