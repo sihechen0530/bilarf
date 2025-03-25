@@ -272,7 +272,7 @@ class Model(nn.Module):
                 ray_results['rgb'] = bilgrid4d_results['rgb']
 
             # convert ray_results['rgb'] to linear before rendering
-            ray_results['rgb'] = conversion.uniform_to_linear(ray_results['rgb'], self.config)
+            ray_results['rgb'] = conversion.uniform_to_linear(ray_results['rgb'], self.config.convert_to)
 
             # Render each ray.
             rendering = render.volumetric_rendering(
@@ -288,6 +288,8 @@ class Model(nn.Module):
                     if k.startswith('normals') or k in ['roughness']
                 })
             
+            # import pdb
+            # pdb.set_trace()
             # Apply bilateral grid.
             if self.bilateral_grid and not no_bilgrid:
                 bil_grids = self.bil_grids[i_level]

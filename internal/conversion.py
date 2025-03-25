@@ -16,7 +16,7 @@ def _convert(images, convert_from, convert_to, is_torch, normalize=True):
     log_func = np.log
     if is_torch:
         exp_func = torch.exp
-        log_func = torch.log
+        log_func = lambda x:torch.where(x > 0, torch.log(x), x)
     images = images * DEFAULT_MAX_VAL
     linear = None
     if convert_from == chromaticity.ChromaticityType.sRGB:
@@ -43,16 +43,17 @@ def _convert(images, convert_from, convert_to, is_torch, normalize=True):
     return None
 
 
-def uniform_to_sRGB(images, config, is_torch=True):
-    return _convert(images, config.convert_to, chromaticity.ChromaticityType.sRGB, is_torch)
+def uniform_to_sRGB(images, convert_from, is_torch=True):
+    return _convert(images, convert_from, chromaticity.ChromaticityType.sRGB, is_torch)
 
-def uniform_to_linear(images, config, is_torch=True):
-    return _convert(images, config.convert_to, chromaticity.ChromaticityType.linear, is_torch)
+def uniform_to_linear(images, convert_from, is_torch=True):
+    return _convert(images, convert_from, chromaticity.ChromaticityType.linear, is_torch)
 
 
 def srgb_2_linear(srgb_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert sRGB to linear RGB.'''
     '''inverse of: (x/255)^(1/2.22)*255'''
+    srgb_img = np.clip(srgb_img, 0, None) if isinstance(srgb_img, np.ndarray) else torch.clamp(srgb_img, min=0)
     return (srgb_img / max_val) ** 2.22 * max_val
 
 def gplog_2_linear(gplog_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
@@ -66,6 +67,8 @@ def truelog_2_linear(truelog_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
 def linear_2_srgb(linear_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):
     '''Convert linear RGB to sRGB.'''
     '''(x/255)^(1/2.22)*255'''
+    # make sur ethe values are non negative for back propagation
+    linear_img = np.clip(linear_img, 0, None) if isinstance(linear_img, np.ndarray) else torch.clamp(linear_img, min=0)
     return (linear_img / max_val) ** (1 / 2.22) * max_val
 
 def linear_2_gplog(linear_img, exp_func, log_func, max_val=DEFAULT_MAX_VAL):

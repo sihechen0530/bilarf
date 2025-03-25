@@ -12,6 +12,7 @@ from internal import ref_utils
 from internal import stepfun
 from internal import utils
 from internal import conversion
+from internal import chromaticity
 import numpy as np
 import torch
 from torch.utils._pytree import tree_map, tree_flatten
@@ -104,10 +105,13 @@ def compute_data_loss(batch, renderings, config):
     # convert back to sRGB and compute loss
     convert_func = conversion.uniform_to_sRGB
 
-    batch_rgb = convert_func(batch['rgb'], config)
+    batch_rgb = convert_func(batch['rgb'], config.convert_to)
 
     for rendering in renderings:
-        rendering_rgb = convert_func(rendering['rgb'], config)
+        # default conversion back from convert_to
+        # rendering_rgb = convert_func(rendering['rgb'], config.convert_to)
+        # rendering is in linear space, convert from linear to sRGB
+        rendering_rgb = convert_func(rendering['rgb'], chromaticity.ChromaticityType.linear)
         resid_sq = (rendering_rgb - batch_rgb[..., :3]) ** 2
         denom = lossmult.sum()
         stats['mses'].append(((lossmult * resid_sq).sum() / denom).item())
