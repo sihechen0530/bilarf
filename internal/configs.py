@@ -32,7 +32,7 @@ class Config:
     factor: int = 4  # The downsample factor of images, 0 for no downsampling.
     no_factor_suffix: bool = False  # load the 'images/' folder rather than 'images_{factor}/'
     multiscale: bool = False  # use multiscale data for training.
-    multiscale_levels: int = 4  # number of multiscale levels.
+    multiscale_levels: int = 1  # number of multiscale levels.
     # ordering (affects heldout test set).
     forward_facing: bool = False  # Set to True for forward-facing LLFF captures.
     render_path: bool = False  # If True, render a path. Used only by LLFF.
@@ -89,7 +89,7 @@ class Config:
 
     lr_init: float = 0.01  # The initial learning rate.
     lr_final: float = 0.001  # The final learning rate.
-    lr_delay_steps: int = 5000  # The number of "warmup" learning steps.
+    lr_delay_steps: int = 2000  # The number of "warmup" learning steps.
     lr_delay_mult: float = 1e-8  # How much sever the "warmup" should be.
     adam_beta1: float = 0.9  # Adam's beta2 hyperparameter.
     adam_beta2: float = 0.99  # Adam's beta2 hyperparameter.
@@ -185,6 +185,7 @@ class Config:
     convert_from: str = chromaticity.ChromaticityType.GPLog
     convert_to: str = chromaticity.ChromaticityType.TrueLog
     normalize: bool = False
+    ccm: str = None
 
 
 def define_common_flags():

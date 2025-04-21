@@ -13,6 +13,18 @@ from internal import vis
 from matplotlib import cm
 
 
+def check_tensor_range(tensor, debug="", exp_min=0, exp_max=1):
+    return
+    min_val = tensor.min().item()
+    max_val = tensor.max().item()
+    if min_val < exp_min or max_val > exp_max + 1e-6:
+        import pdb
+        pdb.set_trace()
+    else:
+        print(f"{debug} Min: {min_val} >= {exp_min}, Max: {max_val} <= {exp_max}")
+
+
+
 class Timing:
     """
     Timing environment

@@ -271,9 +271,20 @@ class Model(nn.Module):
                                                           ray_results['rgb'])
                 ray_results['rgb'] = bilgrid4d_results['rgb']
 
-            # convert ray_results['rgb'] to linear before rendering
-            ray_results['rgb'] = conversion.uniform_to_linear(ray_results['rgb'], self.config.convert_to)
 
+            # BAM thoughts
+            # Decide what we want the output of the MLP to represent
+            # MLP output values are in the range [-padding, 1+padding], if padding == 0, then [0, 1]
+            # e.g. the output of the MLP is log RGB, where the RGB values are in [1, 255]
+            # to linearize the RGB values, ray_results = exp( ray_results['rgb']*log(255) ) / 255.0
+            # resulting RGB are in [0, 1] and assumed to be linear
+
+
+            # convert ray_results['rgb'] to linear before rendering
+            # utils.check_tensor_range(ray_results['rgb'], "ray results before conversion")
+            ray_results['rgb'] = conversion.convert(ray_results['rgb'], self.config.convert_to, "linear", True)
+
+            # utils.check_tensor_range(ray_results['rgb'], "before sending to rendering")
             # Render each ray.
             rendering = render.volumetric_rendering(
                 ray_results['rgb'],
@@ -287,7 +298,13 @@ class Model(nn.Module):
                     for k, v in ray_results.items()
                     if k.startswith('normals') or k in ['roughness']
                 })
-            
+            # apply inverse ccm
+            rendering['rgb'] = conversion.apply_ccm(rendering['rgb'], self.config.ccm)
+            # utils.check_tensor_range(rendering['rgb'], "after rendering before conversion")
+            rendering['rgb'] = conversion.convert(rendering['rgb'], "linear", self.config.convert_to, True)
+            # utils.check_tensor_range(rendering['rgb'], "after rendering after conversion")
+
+
             # import pdb
             # pdb.set_trace()
             # Apply bilateral grid.
@@ -363,7 +380,7 @@ class MLP(nn.Module):
     density_noise: float = 0.  # Standard deviation of noise added to raw density.
     rgb_premultiplier: float = 1.  # Premultiplier on RGB before activation.
     rgb_bias: float = 0.  # The shift added to raw colors pre-activation.
-    rgb_padding: float = 0.001  # Padding added to the RGB outputs.
+    rgb_padding: float = 0  # Padding added to the RGB outputs.
     enable_pred_normals: bool = False  # If True compute predicted normals.
     disable_density_normals: bool = False  # If True don't compute normals.
     disable_rgb: bool = False  # If True don't output RGB.

@@ -104,14 +104,19 @@ def compute_data_loss(batch, renderings, config):
     # convert_func = conversion.uniform_to_linear
     # convert back to sRGB and compute loss
     convert_func = conversion.uniform_to_sRGB
+    # convert_func = lambda x, y: x
 
+    utils.check_tensor_range(batch['rgb'], "batch before conversion")
     batch_rgb = convert_func(batch['rgb'], config.convert_to)
+    utils.check_tensor_range(batch_rgb, "batch after conversion")
 
     for rendering in renderings:
         # default conversion back from convert_to
-        # rendering_rgb = convert_func(rendering['rgb'], config.convert_to)
+        utils.check_tensor_range(rendering['rgb'], "rendering before conversion")
+        rendering_rgb = convert_func(rendering['rgb'], config.convert_to)
+        utils.check_tensor_range(rendering_rgb, "rendering after conversion")
         # rendering is in linear space, convert from linear to sRGB
-        rendering_rgb = convert_func(rendering['rgb'], chromaticity.ChromaticityType.linear)
+        # rendering_rgb = convert_func(rendering['rgb'], chromaticity.ChromaticityType.linear)
         resid_sq = (rendering_rgb - batch_rgb[..., :3]) ** 2
         denom = lossmult.sum()
         stats['mses'].append(((lossmult * resid_sq).sum() / denom).item())

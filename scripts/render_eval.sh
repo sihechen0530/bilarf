@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source environment.sh
 CONFIG="$1" # For 360 scenes.
 # CONFIG=configs/llff.gin  # For forward-facing scenes.
 DATA_DIR="$2"
@@ -12,17 +13,6 @@ CONVERT_FROM="$4"
 CONVERT_TO="$5"
 MAX_STEPS="$6"
 CCM="$7"
-
-# Training
-# You can also run this with `accelerate launch`.
-python train.py --gin_configs=${CONFIG} \
-    --gin_bindings="Config.data_dir = '${DATA_DIR}'" \
-    --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
-    --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
-    --gin_bindings="Config.convert_to = '${CONVERT_TO}'" \
-    --gin_bindings="Config.ccm = '${CCM}'" \
-    --gin_bindings="Config.max_steps = ${MAX_STEPS}"
-
 
 # Render testing views
 python render.py --gin_configs=${CONFIG} \
@@ -44,6 +34,11 @@ python render.py --gin_configs=${CONFIG} \
     --gin_bindings="Config.convert_to = '${CONVERT_TO}'" \
     --gin_bindings="Config.ccm = '${CCM}'"
 
+python eval.py --gin_configs=${CONFIG} \
+    --gin_bindings="Config.data_dir = '${DATA_DIR}'" \
+    --gin_bindings="Config.exp_name = '${EXPERIMENT}'" \
+    --gin_bindings="Config.convert_from = '${CONVERT_FROM}'" \
+    --gin_bindings="Config.convert_to = '${CONVERT_TO}'"
 
 # # Render training views
 # # Comment the last line to render training views without

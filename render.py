@@ -20,6 +20,7 @@ import numpy as np
 import accelerate
 import imageio
 from torch.utils._pytree import tree_map
+from internal import conversion
 
 
 
@@ -116,7 +117,9 @@ def main(unused_argv):
     if config.rawnerf_mode:
         postprocess_fn = dataset.metadata['postprocess_fn']
     else:
-        postprocess_fn = lambda z: z
+        # postprocess_fn = lambda z: z
+        postprocess_fn = lambda z:conversion.uniform_to_sRGB(z, config.convert_to, is_torch=False)
+
 
     dataset_info_for_model = {
         'size': dataset.size,

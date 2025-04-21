@@ -1,3 +1,4 @@
+source ~/.bashrc
 module load cuda/11.8
 conda activate bilarf_310
 export CC=$CONDA_PREFIX/bin/x86_64-conda-linux-gnu-gcc
