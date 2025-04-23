@@ -103,8 +103,8 @@ def compute_data_loss(batch, renderings, config):
     # convert back to linear and compute loss
     # convert_func = conversion.uniform_to_linear
     # convert back to sRGB and compute loss
-    convert_func = conversion.uniform_to_sRGB
-    # convert_func = lambda x, y: x
+    # convert_func = conversion.uniform_to_sRGB
+    convert_func = lambda x, y: x
 
     utils.check_tensor_range(batch['rgb'], "batch before conversion")
     batch_rgb = convert_func(batch['rgb'], config.convert_to)

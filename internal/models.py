@@ -301,7 +301,7 @@ class Model(nn.Module):
             # apply inverse ccm
             # rendering['rgb'] = conversion.apply_ccm(rendering['rgb'], self.config.ccm)
             # utils.check_tensor_range(rendering['rgb'], "after rendering before conversion")
-            rendering['rgb'] = conversion.convert(rendering['rgb'], "linear", self.config.convert_to, True)
+            rendering['rgb'] = conversion.convert(rendering['rgb'], "linear", "sRGB", True)
             # utils.check_tensor_range(rendering['rgb'], "after rendering after conversion")
 
 

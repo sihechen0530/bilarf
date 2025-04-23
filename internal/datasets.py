@@ -696,7 +696,7 @@ class LLFF(Dataset):
             images = np.stack(images, axis=0) / 255.
 
             # # transform the image chromaticity type
-            images = conversion.convert(images, config.convert_from, config.convert_to, False)
+            images = conversion.uniform_to_sRGB(images, config.convert_from, False)
             # convert to linear, apply ccm and then convert to config.convert_to
             # linear_images = conversion.convert(images, config.convert_from, "linear", False)
             # images_cc = conversion.apply_ccm(linear_images, config.ccm)
