@@ -299,7 +299,7 @@ class Model(nn.Module):
                     if k.startswith('normals') or k in ['roughness']
                 })
             # apply inverse ccm
-            rendering['rgb'] = conversion.apply_ccm(rendering['rgb'], self.config.ccm)
+            # rendering['rgb'] = conversion.apply_ccm(rendering['rgb'], self.config.ccm)
             # utils.check_tensor_range(rendering['rgb'], "after rendering before conversion")
             rendering['rgb'] = conversion.convert(rendering['rgb'], "linear", self.config.convert_to, True)
             # utils.check_tensor_range(rendering['rgb'], "after rendering after conversion")
